@@ -1,0 +1,8 @@
+{
+  "name": "CSIR-SERC Recruitment Portal",
+  "description": "Official recruitment portal for CSIR-SERC adhering to GIGW 3.0 guidelines. Features multi-post management, secure document handling, and AI-assisted application processes.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
