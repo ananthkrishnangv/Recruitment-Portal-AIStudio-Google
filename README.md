@@ -1,179 +1,155 @@
-# CSIR-SERC Recruitment Portal - Next.js Edition v2.0.0
 
-## 🚀 What's New
+# CSIR-SERC Recruitment Portal (v4.0.2 Stable)
 
-This is a **complete redesign** of the CSIR-SERC Recruitment Portal with modern technologies:
-
-- ✅ **Next.js 15** - Modern React framework with SSR, SSG, and API routes
-- ✅ **React 18.3** - Latest React with concurrent rendering
-- ✅ **Tailwind CSS 3.4** - Utility-first CSS for responsive design
-- ✅ **Node.js 20 LTS** - Long-term support Node.js runtime
-- ✅ **Production-Ready Docker** - Multi-stage builds, non-root user, health checks
-- ✅ **GIGW 3.0 Compliant** - Security headers and compliance built-in
-- ✅ **Macvlan Network Support** - Deploy on Podman with static IP (10.30.0.14)
-
-## 📋 Requirements
-
-### System Requirements
-- Node.js 20.x LTS or Docker/Podman
-- 512MB+ RAM (production)
-- 1GB+ storage for image
-- Podman v4.0+ or Docker 20.10+
-
-### Network Requirements
-- Podman Host: 10.10.200.53
-- Macvlan Network: mcvlan1
-- Target Container IP: 10.30.0.14
-
-## 🏃 Quick Start
-
-### Local Development
-
-```bash
-# Install dependencies
-npm install
-
-# Set up environment
-cp .env.local.example .env.local
-# Edit .env.local and add your Gemini API key
-
-# Run development server
-npm run dev
-
-# Open http://localhost:3000 in your browser
-```
-
-### Production Build
-
-```bash
-# Build production bundle
-npm run build
-
-# Start production server
-npm start
-```
-
-## 🐳 Docker/Podman Deployment
-
-### Quick Deployment
-
-```bash
-cd /home/ananth/Documents/Recruitment-Portal-NextJS
-
-# Using automatic deployment script
-./deploy-podman.sh
-
-# OR using docker-compose
-podman-compose -f docker-compose.yml up -d
-```
-
-### Manual Deployment
-
-```bash
-# Build image
-podman build -t csir-serc-recruitment-portal:2.0.0 .
-
-# Run container
-podman run -d \
-  --name csir-serc-portal \
-  --network mcvlan1 \
-  --ip 10.30.0.14 \
-  -p 3000:3000 \
-  -e NODE_ENV=production \
-  csir-serc-recruitment-portal:2.0.0
-
-# Verify
-curl http://10.30.0.14:3000
-```
-
-## 📂 Project Structure
-
-```
-recruitment-portal-nextjs/
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx         # Root layout
-│   │   ├── page.tsx           # Home page
-│   │   └── globals.css        # Global styles
-│   ├── components/            # React components
-│   └── types.ts              # TypeScript types
-├── public/                    # Static assets
-├── Dockerfile                 # Multi-stage production build
-├── docker-compose.yml         # Container orchestration
-├── deploy-podman.sh          # Automated deployment script
-├── next.config.js            # Next.js configuration
-├── tailwind.config.ts        # Tailwind CSS configuration
-├── tsconfig.json             # TypeScript configuration
-└── package.json              # Dependencies and scripts
-```
-
-## 🔧 Available Scripts
-
-### Development
-```bash
-npm run dev           # Start dev server (http://localhost:3000)
-npm run build         # Production build
-npm start            # Start production server
-npm run lint         # Run ESLint
-```
-
-### Docker/Podman
-```bash
-./deploy-podman.sh              # Automated deployment
-podman build -t <name> .        # Build image
-podman run ...                  # Run container
-podman-compose up -d            # Use docker-compose
-```
-
-## 🌐 Accessing the Application
-
-| Environment | URL | Notes |
-|-----------|-----|-------|
-| Local Dev | http://localhost:3000 | Development server |
-| Podman Container | http://10.30.0.14:3000 | Production (Macvlan) |
-| From Podman Host | http://10.10.200.53:3000 | Via host port |
-
-## ⚙️ Configuration
-
-Create `.env.local` with:
-
-```bash
-NEXT_PUBLIC_GEMINI_API_KEY=your_api_key_here
-NODE_ENV=production
-```
-
-## 🔐 Security Features
-
-- GIGW 3.0 compliant headers
-- Non-root Docker execution
-- TypeScript for type safety
-- Read-only filesystem
-- Health checks enabled
-
-## 📊 Performance
-
-- Initial JS Bundle: ~105 KB
-- Optimized Size: ~45 KB (gzipped)
-- Docker Image Size: ~300-400 MB
-
-## 📝 Documentation
-
-- [DEPLOYMENT_V2.md](./DEPLOYMENT_V2.md) - Comprehensive deployment guide
-- [DEPLOYMENT.md](./DEPLOYMENT.md) - Original v1.x deployment guide
-
-## 🔄 Quick Deploy
-
-```bash
-cd /home/ananth/Documents/Recruitment-Portal-NextJS
-./deploy-podman.sh
-```
-
-## 📞 Support
-
-Email: ict.serc@csir.res.in
+## 🏛️ Project Overview
+The **CSIR-SERC Recruitment Portal** is a GIGW 3.0 compliant, state-of-the-art web application designed to streamline the recruitment process for the Structural Engineering Research Centre. It features a robust multi-role workflow connecting Applicants, Administrative Officers, and the Director through a secure, transparent, and efficient digital interface.
 
 ---
 
-**Status**: ✅ Production Ready  
-**Version**: 2.0.0  
-**Last Updated**: 14 January 2026
+## ✨ Features Implemented
+
+### 1. 🖥️ Public Interface (Applicant)
+*   **Dynamic Landing Page**: Features a graphical 7-step application process guide with interactive tooltips, marquee news updates, and immediate vacancy stats.
+*   **Job Openings**: Searchable and filterable list of active recruitment drives (Scientists, Technical Officers, etc.) with professional status badges.
+*   **Identity-Based Auth**: Secure login/registration using Aadhaar UID (simulating UIDAI integration).
+*   **7-Step Application Wizard**:
+    *   Auto-save functionality.
+    *   **AI Assistant**: Gemini Pro integration to auto-generate "Statement of Purpose" (SOP) based on user profile.
+    *   **Fluent Uploads**: Drag-and-drop zones for Photos, Signatures, and PDFs with client-side preview and validation.
+    *   Final PDF generation and download.
+*   **Helpdesk**: Integrated ticketing system for applicants to raise issues regarding payments, uploads, etc.
+*   **Quick Status Check**: Public modal to track application status using Application ID without full login.
+
+### 2. 🚀 Administrative Console (System Admin)
+*   **Dashboard Analytics**: Real-time charts for registration frequency, scrutiny queues, and system health.
+*   **Scrutiny Board**: 
+    *   Bulk selection and status updates (Accept/Reject).
+    *   "Push to Director" workflow for final approval.
+*   **Outreach Module**: 
+    *   Multi-channel broadcasting (Email, WhatsApp, Telegram).
+    *   Selective filtering by Post or individual candidates.
+*   **Helpdesk Management**: 
+    *   Ticket overview (Open/Resolved).
+    *   **Quick Reply**: Hover-over instant reply functionality for rapid support.
+*   **System Settings**:
+    *   **Branding**: Dynamic Logo and Banner configuration.
+    *   **Notification Gateways**: Configure SMTP, WhatsApp API, and Telegram Bot tokens.
+    *   **Backups**: One-click SQL Dump, Artifact Zip, or Full System Snapshot generation.
+
+### 3. 🛡️ Role-Based Access Control (RBAC)
+*   **Applicant**: Apply for posts, track status, raise tickets.
+*   **Supervisor (Administrative Officer)**: Scrutinize applications, manage helpdesk, conduct outreach.
+*   **Director**: View high-level analytics, approve final shortlists.
+*   **System Admin**: Full system configuration, backup management, user management.
+
+---
+
+## 🔑 Default Credentials
+
+Use these credentials to access different modules of the application.
+
+| Role | Username / Email | Password / UID | Access Level |
+| :--- | :--- | :--- | :--- |
+| **System Admin** | `ict.serc@csir.res.in` | `SercAdmin@2024!#Strong` | **Full Control** (Settings, Backups, Users) |
+| **Director** | `director.serc@csir.res.in` | `Serc@123456789` | **Strategic** (Analytics, Approvals) |
+| **Supervisor** | `admoff.serc@csir.res.in` | `Serc@123456789` | **Operational** (Scrutiny, Helpdesk, Outreach) |
+| **Applicant** | *N/A (Uses Aadhaar)* | `123412341234` | **User** (Application Form, Dashboard) |
+
+> **Note**: For Applicant login, use the Aadhaar number `123412341234`. No password is required (simulated OTP flow).
+
+---
+
+## 🗄️ Database Schema
+
+The system is designed for **MariaDB 11.8 LTS**.
+
+### 1. User Table
+```sql
+CREATE TABLE users (
+    id VARCHAR(36) PRIMARY KEY,
+    full_name VARCHAR(100),
+    email VARCHAR(100),
+    mobile VARCHAR(15),
+    aadhaar VARCHAR(12) UNIQUE,
+    password_hash VARCHAR(255),
+    role ENUM('APPLICANT', 'ADMIN', 'SUPERVISOR', 'DIRECTOR')
+);
+```
+
+### 2. Job Posts
+```sql
+CREATE TABLE job_posts (
+    id VARCHAR(36) PRIMARY KEY,
+    code VARCHAR(50) UNIQUE, -- e.g., SCI-01-2024
+    title VARCHAR(100),
+    type ENUM('Scientist', 'Technical Officer', 'Technician'),
+    vacancies INT,
+    last_date DATE,
+    status ENUM('DRAFT', 'PUBLISHED', 'CLOSED', 'RESULT_DECLARED')
+);
+```
+
+### 3. Applications
+```sql
+CREATE TABLE applications (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(36),
+    post_id VARCHAR(36),
+    status ENUM('Draft', 'Submitted', 'Under Scrutiny', 'Selected', 'Rejected'),
+    submitted_at TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (post_id) REFERENCES job_posts(id)
+);
+```
+
+### 4. Support Tickets
+```sql
+CREATE TABLE support_tickets (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(36),
+    category VARCHAR(50),
+    subject VARCHAR(200),
+    description TEXT,
+    status ENUM('OPEN', 'RESOLVED', 'CLOSED'),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+---
+
+## 🛠️ Local Deployment Guide
+
+### Prerequisites
+*   Node.js v20+
+*   NPM or Yarn
+
+### Installation
+
+1.  **Install Dependencies**:
+    ```bash
+    npm install
+    ```
+
+2.  **Start Development Server**:
+    ```bash
+    npm run dev
+    ```
+    Access the portal at `http://localhost:5173`.
+
+3.  **Production Build**:
+    ```bash
+    npm run build
+    ```
+    The artifacts will be generated in the `dist/` folder, ready for deployment on Nginx/Apache.
+
+---
+
+## 🎨 Design System
+
+*   **Font Family**: `Inter` (Headings), `Noto Sans` (Body), `Monospace` (Badges/IDs).
+*   **Color Palette**:
+    *   Brand Blue: `#3b82f6` (Primary Action)
+    *   CSIR Blue: `#0078D4` (Corporate Identity)
+    *   Slate: `#0f172a` (Typography)
+*   **Iconography**: Lucide React.
+*   **Styling**: Tailwind CSS with custom glass-morphism and fluent design utilities.
